@@ -22,29 +22,38 @@
 
 ---
 
-## 2. Kết Quả Chạy Thực Tế Trên Máy Chủ AWS (CP2 & CP3)
+## 2. Kiểm Tra Môi Trường & Dữ Liệu (CP2)
 
-**Dataset:** Credit Card Fraud Detection (284,807 giao dịch thực).  
+- **Môi trường Python & Thư viện ML:** `lightgbm`, `scikit-learn`, `pandas`, `numpy`, `kaggle` API (1.7.4.5) đã sẵn sàng.
+- **Xác nhận Dataset (`creditcard.csv`):**
+  - **Kích thước (Shape):** `(284807, 31)` — 284,807 dòng, 31 cột.
+  - **Số lượng ô thiếu (Missing Values):** `0`.
+  - **Phân bố nhãn (Class Counts):** `{0: 284318, 1: 489}` (Chỉ 489 giao dịch gian lận / ~0.172%).
+
+---
+
+## 3. Kết Quả Huấn Luyện & Benchmark LightGBM (CP3)
+
 **Mô hình:** `LightGBM (LGBMClassifier)` phát hiện giao dịch gian lận.
 
 ### Bảng Kết Quả Benchmark Thực Tế Từ Máy Chủ AWS EC2:
 
 | Chỉ số (Metric) | Giá trị thực tế trên AWS EC2 Node |
 |---|---|
-| **Thời gian load dataset** | 21.2421 giây |
-| **Thời gian huấn luyện (Training Time)** | 3.3235 giây |
-| **Best Iteration** | 100 |
-| **AUC-ROC** | 0.841120 |
-| **Accuracy** | 99.59% (0.995910) |
-| **Precision** | 0.272727 |
-| **Recall** | 0.826531 |
-| **F1-Score** | 0.410127 |
-| **Inference Latency (1 row)** | 1.2988 ms |
-| **Inference Throughput (1000 rows)** | 265,047.68 QPS |
+| **Thời gian load dataset** | `21.2421` giây |
+| **Thời gian huấn luyện (Training Time)** | `3.3235` giây |
+| **Best Iteration** | `100` |
+| **AUC-ROC** | `0.841120` |
+| **Accuracy** | `99.59%` (`0.995910`) |
+| **Precision** | `0.272727` |
+| **Recall** | `0.826531` |
+| **F1-Score** | `0.410127` |
+| **Inference Latency (1 row)** | `1.2988` ms |
+| **Inference Throughput (1000 rows)** | `265,047.68` QPS |
 
 ---
 
-## 3. Kiểm Tra Tài Nguyên & Chi Phí (CP4)
+## 4. Kiểm Tra Tài Nguyên & Chi Phí (CP4)
 
 - **Compute Node (`t3.micro`):** CPU 1 vCPU, RAM 1 GB.
 - **Tài nguyên tiêu thụ:** CPU peak ~90% lúc fit LightGBM, RAM ~600 MB.
@@ -57,7 +66,7 @@
 
 ---
 
-## 4. Hướng Dẫn Dọn Dẹp Tài Nguyên (CP5)
+## 5. Hướng Dẫn Dọn Dẹp Tài Nguyên (CP5)
 
 Khi hoàn thành bài lab, chạy lệnh sau trong PowerShell để xóa toàn bộ tài nguyên tránh phát sinh phí:
 ```powershell
