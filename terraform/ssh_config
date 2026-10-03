@@ -1,0 +1,15 @@
+# SSH Configuration for AWS Bastion ProxyJump (CP1)
+# Replace <BASTION_PUBLIC_IP> and <GPU_PRIVATE_IP> with your real Terraform output IPs.
+
+Host lab-bastion
+    HostName <BASTION_PUBLIC_IP>
+    User ubuntu
+    IdentityFile ./lab-key
+    IdentitiesOnly yes
+
+Host lab-cpu
+    HostName <GPU_PRIVATE_IP>
+    User ubuntu
+    IdentityFile ./lab-key
+    IdentitiesOnly yes
+    ProxyJump lab-bastion

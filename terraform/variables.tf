@@ -34,3 +34,9 @@ variable "gpu_instance_type" {
   type        = string
   default     = "g4dn.xlarge"
 }
+
+variable "allowed_ssh_cidr" {
+  description = "Allowed IPv4 CIDR block for SSH ingress to Bastion Host"
+  type        = string
+  default     = "14.177.16.53/32"
+}
