@@ -24,3 +24,7 @@ lab-key.pub
 # Data files & generated datasets
 data/
 *.csv
+
+# Local binary tools
+terraform/terraform.exe
+terraform/LICENSE.txt
