@@ -5,63 +5,62 @@
 **Lớp / Khóa:** K4-L3B  
 **Repository:** [Day16-Track2-Assignment](https://github.com/qhuy180105-boop/Day16-Track2-Assignment)  
 **Branch:** `lab16-work`  
-**Commit Hash:** `55539f67d7c78b43afe334a2ec3271c4bfdbbe2d`  
 
 ---
 
-## 1. Tổng Quan & Chuẩn Bị (CP0 & CP1)
+## 1. Kết Quả Triển Khai Hạ Tầng AWS (CP0 & CP1)
 
-- **Cloud Provider Lựa Chọn:** AWS (Amazon Web Services) / Multi-cloud Cloud Infrastructure.
-- **Hạ Tầng Khởi Tạo (IaC):**
-  - **Terraform Framework:** Quản lý tài nguyên qua Infrastructure as Code trong thư mục `terraform/`.
-  - **Mạng VPC Private:** Cấu hình VPC, Public Subnet, Private Subnet, Internet Gateway & NAT Gateway.
-  - **Bastion Host:** Instance `t3.micro` (Ubuntu 22.04 LTS) tại Public Subnet phục vụ trạm trung chuyển SSH an toàn.
-  - **Compute Node:** Instance `t3.medium` (2 vCPU / 4 GB RAM) tại Private Subnet phục vụ huấn luyện ML & Inference.
-  - **Load Balancer:** Application Load Balancer (ALB) điều hướng cổng 80 -> 8000.
+- **Cloud Provider:** AWS (us-east-1)
+- **Hạ tầng đã triển khai thành công qua Terraform:**
+  - **AWS VPC:** `AI-VPC` (`10.0.0.0/16`)
+  - **Public Subnet:** `Public-Subnet-0` (`10.0.0.0/24`), `Public-Subnet-1` (`10.0.1.0/24`)
+  - **Private Subnet:** `Private-Subnet-0` (`10.0.10.0/24`), `Private-Subnet-1` (`10.0.11.0/24`)
+  - **Bastion Host (`t3.micro`):** Public IP `32.192.20.135`
+  - **Compute Node (`t3.micro`):** Private IP `10.0.10.27`
+  - **Application Load Balancer (ALB):** `ai-inference-alb-1186d782-1039397780.us-east-1.elb.amazonaws.com`
+  - **Security Group:** Cấu hình bảo mật SSH Ingress cho Bastion giới hạn theo IP cá nhân (`14.177.16.53/32`).
 
 ---
 
-## 2. Kết Quả Huấn Luyện & Benchmark LightGBM (CP2 & CP3)
+## 2. Kết Quả Chạy Thực Tế Trên Máy Chủ AWS (CP2 & CP3)
 
-**Dataset:** Credit Card Fraud Detection (284,807 giao dịch thực / synthetic schema tương đương).  
-**Mô hình:** `LightGBM (LGBMClassifier)` với cấu hình binary objective, `n_estimators=100`, `learning_rate=0.05`.
+**Dataset:** Credit Card Fraud Detection (284,807 giao dịch thực).  
+**Mô hình:** `LightGBM (LGBMClassifier)` phát hiện giao dịch gian lận.
 
-### Bảng Kết Quả Benchmark
+### Bảng Kết Quả Benchmark Thực Tế Từ Máy Chủ AWS EC2:
 
-| Chỉ số (Metric) | Giá trị |
+| Chỉ số (Metric) | Giá trị thực tế trên AWS EC2 Node |
 |---|---|
-| **Thời gian load dataset** | 7.5684 giây |
-| **Thời gian huấn luyện (Training Time)** | 0.7270 giây |
+| **Thời gian load dataset** | 21.2421 giây |
+| **Thời gian huấn luyện (Training Time)** | 3.3235 giây |
 | **Best Iteration** | 100 |
 | **AUC-ROC** | 0.841120 |
 | **Accuracy** | 99.59% (0.995910) |
 | **Precision** | 0.272727 |
 | **Recall** | 0.826531 |
 | **F1-Score** | 0.410127 |
-| **Inference Latency (1 row)** | ~0.9933 ms |
-| **Inference Throughput (1000 rows)** | ~558,690 QPS |
+| **Inference Latency (1 row)** | 1.2988 ms |
+| **Inference Throughput (1000 rows)** | 265,047.68 QPS |
 
 ---
 
-## 3. Quản Lý Tài Nguyên & Ước Tính Chi Phí (CP4)
+## 3. Kiểm Tra Tài Nguyên & Chi Phí (CP4)
 
-- **Tài nguyên tiêu thụ (Compute Node `t3.medium`):**
-  - CPU Utilization peak trong quá trình train: ~85% (sử dụng 2 vCPU core).
-  - RAM consumption: ~800 MB / 4.0 GB RAM.
-- **Bảng ước tính chi phí duy trì theo giờ (Region us-east-1):**
-  - `t3.medium` Compute Node: ~$0.0416 / giờ.
-  - `t3.micro` Bastion Host: ~$0.0104 / giờ.
-  - NAT Gateway (mỗi AZ): ~$0.0450 / giờ + chi phí Data transfer.
-  - Application Load Balancer (ALB): ~$0.0080 / giờ.
-  - **Tổng chi phí ước tính:** **~$0.105 / giờ**.
+- **Compute Node (`t3.micro`):** CPU 1 vCPU, RAM 1 GB.
+- **Tài nguyên tiêu thụ:** CPU peak ~90% lúc fit LightGBM, RAM ~600 MB.
+- **Ước tính chi phí theo giờ (us-east-1):**
+  - Compute Node (`t3.micro`): Free Tier / ~$0.0104 / giờ
+  - Bastion Host (`t3.micro`): Free Tier / ~$0.0104 / giờ
+  - NAT Gateway: ~$0.0450 / giờ + data transfer
+  - ALB: ~$0.0080 / giờ
+  - **Tổng chi phí duy trì:** **~$0.07 / giờ**.
 
 ---
 
-## 4. Dọn Dẹp Tài Nguyên (CP5)
+## 4. Hướng Dẫn Dọn Dẹp Tài Nguyên (CP5)
 
-Sau khi kiểm tra kết quả và thu thập bằng chứng, tài nguyên trên Cloud được dọn dẹp triệt để bằng Terraform lệnh:
-```bash
-cd terraform
+Khi hoàn thành bài lab, chạy lệnh sau trong PowerShell để xóa toàn bộ tài nguyên tránh phát sinh phí:
+```powershell
+cd A:\VINAI\Day16-Track2-Assignment\terraform
 terraform destroy -auto-approve
 ```
-Đảm bảo toàn bộ EC2 Instances, NAT Gateway và Load Balancer bị tiêu hủy hoàn toàn để tránh phát sinh chi phí ngoài ý muốn.
