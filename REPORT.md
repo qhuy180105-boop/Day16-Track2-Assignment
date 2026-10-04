@@ -59,7 +59,13 @@
 ## 4. Kiểm Tra Tài Nguyên & Chi Phí (CP4)
 
 - **Compute Node (`t3.micro`):** CPU 1 vCPU, RAM 1 GB.
-- **Tài nguyên tiêu thụ:** CPU peak ~90% lúc fit LightGBM, RAM ~600 MB.
+- **Tài nguyên tiêu thụ:** CPU peak ~49.3% trong quá trình load data và huấn luyện LightGBM, RAM ~600 MB.
+- **Biểu đồ giám sát tài nguyên thực tế (AWS CloudWatch Metrics):**
+  - Biểu đồ trích xuất từ dữ liệu CloudWatch đo đạc thực tế của instance Compute Node (`i-092c535cc45935f74`) và Bastion Host (`i-0923560e090434a17`) rạng sáng ngày 04/10/2026.
+  - Ảnh minh chứng tài nguyên: `submission/screenshots/resource_usage.png`.
+
+![AWS EC2 Resource Monitoring](submission/screenshots/resource_usage.png)
+
 - **Ước tính chi phí theo giờ (us-east-1):**
   - Compute Node (`t3.micro`): Free Tier / ~$0.0104 / giờ
   - Bastion Host (`t3.micro`): Free Tier / ~$0.0104 / giờ
