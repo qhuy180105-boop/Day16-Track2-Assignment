@@ -34,22 +34,25 @@
 
 ## 3. Kết Quả Huấn Luyện & Benchmark LightGBM (CP3)
 
-**Mô hình:** `LightGBM (LGBMClassifier)` phát hiện giao dịch gian lận.
+**Mô hình:** `LightGBM (LGBMClassifier)` phát hiện giao dịch gian lận (`creditcard.csv`).
 
-### Bảng Kết Quả Benchmark Thực Tế Từ Máy Chủ AWS EC2:
+### Bảng Kết Quả Benchmark Thực Tế:
 
-| Chỉ số (Metric) | Giá trị thực tế trên AWS EC2 Node |
+| Chỉ số (Metric) | Giá trị thực tế đo được |
 |---|---|
-| **Thời gian load dataset** | `21.2421` giây |
-| **Thời gian huấn luyện (Training Time)** | `3.3235` giây |
+| **Thời gian load dataset** | `0.9349` giây |
+| **Thời gian huấn luyện (Training Time)** | `0.5867` giây |
 | **Best Iteration** | `100` |
 | **AUC-ROC** | `0.841120` |
 | **Accuracy** | `99.59%` (`0.995910`) |
 | **Precision** | `0.272727` |
 | **Recall** | `0.826531` |
 | **F1-Score** | `0.410127` |
-| **Inference Latency (1 row)** | `1.2988` ms |
-| **Inference Throughput (1000 rows)** | `265,047.68` QPS |
+| **Inference Latency (1 row)** | `1.0195` ms |
+| **Inference Throughput (1000 rows)** | `697,788.01` QPS |
+
+### Screenshot Terminal Kết Quả Benchmark:
+![Benchmark Terminal Output](submission/screenshots/benchmark_terminal.png)
 
 ---
 
