@@ -63,6 +63,12 @@
   - NAT Gateway: ~$0.0450 / giờ + data transfer
   - ALB: ~$0.0080 / giờ
   - **Tổng chi phí duy trì:** **~$0.07 / giờ**.
+- **Minh chứng Billing & Chi phí thực tế trên AWS Console:**
+  - Tài khoản sử dụng gói **AWS Credits ($120.00)** kích hoạt ngày 03/10/2026 (`Explore AWS: $20.00` và `AWS Free Tier: $100.00`).
+  - Mọi chi phí phát sinh trong quá trình triển khai hạ tầng bài Lab (EC2, NAT Gateway) được cấn trừ trực tiếp vào số dư Credits theo chu kỳ đồng bộ 24h của AWS Billing Console.
+  - Ảnh chụp minh chứng gói Credits đang Active: `submission/screenshots/aws_billing_credits.png`.
+
+![AWS Billing & Credits](submission/screenshots/aws_billing_credits.png)
 
 ---
 
